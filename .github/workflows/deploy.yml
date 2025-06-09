@@ -1,0 +1,43 @@
+name: Full Deployment Pipeline
+
+on:
+  push:
+    branches: [main]
+
+# Can separate jobs to run on different triggers or in parallel
+# Simpler here for a single job in a single file
+jobs:
+  lint-build-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Pull code
+        uses: actions/checkout@v3
+
+      - name: Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.13
+
+      - name: Install linter - flake8
+        run: pip install flake8
+
+      - name: Lint using flake8
+        run: flake8 .
+
+      - name: Authenticate Docker and GCR
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
+
+      - name: Configure Docker to use GCR
+        run: |
+          gcloud auth configure-docker gcr.io
+
+      - name: Build Docker image via Dockerfile
+        run: |
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/ctaeval:${{ github.run_number }} .
+
+      - name: Push Docker image to GCR
+        run: |
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/ctaeval:${{ github.run_number }}
