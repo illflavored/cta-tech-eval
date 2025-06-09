@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+
+# Virtual Environments
+venv/
+.env/
+.env.*  # for dotenv configs
+
+# Git stuff
+.git/
+.gitignore
+
+# Local Configs
+*.log
+*.swp
+.DS_Store
+.vscode/
+.idea/
+
+# Test and Build
+htmlcov/
+.tox/
+.coverage
+coverage.xml
+dist/
+build/
+*.egg-info/
+
+# GCP Creds and Secrets
+*.json
+gha-creds-*.json
