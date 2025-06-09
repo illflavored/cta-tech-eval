@@ -3,9 +3,11 @@ import httpx
 
 app = FastAPI()
 
+
 @app.get("/")
 def hello():
     return {"message": "Morgan Sveen - CTA DevOps Tech Evaluation"}
+
 
 @app.get("/standings")
 async def get_standings():
