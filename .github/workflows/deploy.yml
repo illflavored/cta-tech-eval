@@ -7,7 +7,7 @@ on:
 # Can separate jobs to run on different triggers or in parallel
 # Simpler here for a single job in a single file
 jobs:
-  lint-build-push:
+  lint-build-push-deploy:
     runs-on: ubuntu-latest
 
     steps:
